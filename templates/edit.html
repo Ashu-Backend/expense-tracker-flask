@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Edit Expense</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="edit">
+        <form method="POST" action="/update/{{ exp[0] }}">
+            <input type="text" name="title" value="{{ exp[1] }}"><br><br>
+            <input type="number" name="amount" value="{{ exp[2] }}"><br><br>
+            <input type="text" name="category" value="{{ exp[3] }}"><br><br>
+
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Expense Tracker</title>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<body>
+    <div class="enter">
+        <h1>Welcome, {{ session.user }}</h1>
+        <h2>Add Your Expenses</h2>
+        <form method="POST" action="/add">
+            <input type="text" name="title" placeholder="Title"><br><br>
+            <input type="number" name="amount" placeholder="Amount" min="1" required><br><br>
+
+            <button type="submit">Add Expense</button>
+        </form>
+
+        <h2>All Expenses</h2>
+        <table border="1" class="tbl">
+            <tr>
+                <th>Sr No</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+
+            {% for exp in expenses %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ exp[1] }}</td>
+                <td>{{ exp[2] }}</td>
+                <td>{{ exp[3] }}</td>
+                <td>
+                    <a href="/edit/{{ exp[0] }}">Edit</a>
+                    <a href="/delete/{{ exp[0] }}" onclick="return confirm('Are you sure you want to delete your account?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Total Expense: {{ total }}</h3>
+        <a href="/logout">Logout</a>
+        {% if session.user_id %}
+        <form action="/delete-user/{{ session.user_id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your account?')">
+            <button type="submit">Delete Account</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+
+</html>
